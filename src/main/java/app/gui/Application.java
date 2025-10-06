@@ -24,6 +24,7 @@ import entity.Grade;
 import usecase.FormTeamUseCase;
 import usecase.GetAverageGradeUseCase;
 import usecase.GetTopGradeUseCase;
+import usecase.GetBottomGradeUseCase;
 import usecase.GetGradeUseCase;
 import usecase.JoinTeamUseCase;
 import usecase.LeaveTeamUseCase;
@@ -57,6 +58,7 @@ public class Application {
         final LeaveTeamUseCase leaveTeamUseCase = config.leaveTeamUseCase();
         final GetAverageGradeUseCase getAverageGradeUseCase = config.getAverageGradeUseCase();
         final GetTopGradeUseCase getTopGradeUseCase = config.getTopGradeUseCase();
+        final GetBottomGradeUseCase getBottomGradeUseCase = config.getBottomGradeUseCase();
 
         // this is the code that runs to set up our GUI
         SwingUtilities.invokeLater(() -> {
@@ -72,7 +74,7 @@ public class Application {
             final JPanel logGradeCard = createLogGradeCard(frame, logGradeUseCase);
             final JPanel formTeamCard = createFormTeamCard(frame, formTeamUseCase);
             final JPanel joinTeamCard = createJoinTeamCard(frame, joinTeamUseCase);
-            final JPanel manageTeamCard = createManageTeamCard(frame, leaveTeamUseCase, getAverageGradeUseCase,  getTopGradeUseCase);
+            final JPanel manageTeamCard = createManageTeamCard(frame, leaveTeamUseCase, getAverageGradeUseCase,  getTopGradeUseCase, getBottomGradeUseCase);
 
             cardPanel.add(defaultCard, "DefaultCard");
             cardPanel.add(getGradeCard, "GetGradeCard");
@@ -326,13 +328,14 @@ public class Application {
     // Task 4: modify this method so that it takes in a getTopGradeUseCase
     //              Note: this will require you to update the code that calls this method.
     private static JPanel createManageTeamCard(JFrame jFrame, LeaveTeamUseCase leaveTeamUseCase,
-                                               GetAverageGradeUseCase getAverageGradeUseCase, GetTopGradeUseCase getTopGradeUseCase) {
+                                               GetAverageGradeUseCase getAverageGradeUseCase, GetTopGradeUseCase getTopGradeUseCase, GetBottomGradeUseCase getBottomGradeUseCase) {
         final JPanel theCard = new JPanel();
         theCard.setLayout(new GridLayout(ROWS, COLS));
         final JTextField courseField = new JTextField(20);
         // make a separate line.
         final JButton getAverageButton = new JButton("Get Average Grade");
         final JButton getTopButton = new JButton("Get Top Grade");
+        final JButton getBottomButton = new JButton("Get Bottom Grade");
         final JButton leaveTeamButton = new JButton("Leave Team");
         final JLabel resultLabel = new JLabel();
 
@@ -376,7 +379,26 @@ public class Application {
                 }
             }
         });
+        getBottomButton.addActionListener(new ActionListener() {
+            /**
+             * Invoked when an action occurs.
+             *
+             * @param e the event to be processed
+             */
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final String course = courseField.getText();
 
+                try {
+                    final float bottom = getBottomGradeUseCase.getBottomGrade(course);
+                    JOptionPane.showMessageDialog(jFrame, "Bottom Grade: " + bottom);
+                    courseField.setText("");
+                }
+                catch (JSONException ex) {
+                    JOptionPane.showMessageDialog(jFrame, ex.getMessage());
+                }
+            }
+        });
 
         // Task 4: Add action listener for getTopGrade button, follow example of getAverageButton
 
@@ -402,6 +424,7 @@ public class Application {
         theCard.add(courseField);
         theCard.add(getAverageButton);
         theCard.add(getTopButton);
+        theCard.add(getBottomButton);
         theCard.add(leaveTeamButton);
         theCard.add(resultLabel);
         return theCard;

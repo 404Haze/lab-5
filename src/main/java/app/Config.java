@@ -2,13 +2,7 @@ package app;
 
 import api.GradeDataBase;
 import api.MongoGradeDataBase;
-import usecase.FormTeamUseCase;
-import usecase.GetAverageGradeUseCase;
-import usecase.GetGradeUseCase;
-import usecase.GetTopGradeUseCase;
-import usecase.JoinTeamUseCase;
-import usecase.LeaveTeamUseCase;
-import usecase.LogGradeUseCase;
+import usecase.*;
 
 /**
  * Config class to provide use cases with the necessary dependencies.
@@ -67,5 +61,9 @@ public class Config {
 
     public GetTopGradeUseCase getTopGradeUseCase() {
         return new GetTopGradeUseCase(gradeDataBase);
+    }
+
+    public GetBottomGradeUseCase getBottomGradeUseCase() {
+        return new GetBottomGradeUseCase(gradeDataBase);
     }
 }
