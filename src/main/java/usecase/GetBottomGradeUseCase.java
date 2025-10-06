@@ -1,5 +1,7 @@
 package usecase;
 
+import java.util.HashMap;
+
 import api.GradeDataBase;
 import entity.Grade;
 import entity.Team;
@@ -19,9 +21,11 @@ public final class GetBottomGradeUseCase {
      * @param course The course.
      * @return The top grade.
      */
-    public float getBottomGrade(String course) {
+    public HashMap<String, Float> getBottomGrade(String course) {
+        HashMap<String, Float> resMap = new HashMap<>();
         // Call the API to get the usernames of all your team members
         float min = 100;
+        String minName = "";
         final Team team = gradeDataBase.getMyTeam();
         // Call the API to get all the grades for the course for all your team members
         for (String username : team.getMembers()) {
@@ -33,10 +37,13 @@ public final class GetBottomGradeUseCase {
                     // Sum all the grades
                     if (grade.getGrade() < min) {
                         min = grade.getGrade();
+                        minName = username;
                     }
                 }
             }
         }
-        return min;
+        resMap.put(minName, min);
+        return resMap;
     }
+
 }

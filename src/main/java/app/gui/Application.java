@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -370,8 +371,10 @@ public class Application {
                 final String course = courseField.getText();
 
                 try {
-                    final float top = getTopGradeUseCase.getTopGrade(course);
-                    JOptionPane.showMessageDialog(jFrame, "Top Grade: " + top);
+                    final HashMap<String, Float> top = getTopGradeUseCase.getTopGrade(course);
+                    JOptionPane.showMessageDialog(
+                        jFrame, "Top Grade: " + top.values().iterator().next() + "\n" + "by: " + top.keySet().iterator().next()
+                    );
                     courseField.setText("");
                 }
                 catch (JSONException ex) {
@@ -390,8 +393,11 @@ public class Application {
                 final String course = courseField.getText();
 
                 try {
-                    final float bottom = getBottomGradeUseCase.getBottomGrade(course);
-                    JOptionPane.showMessageDialog(jFrame, "Bottom Grade: " + bottom);
+                    final HashMap<String, Float> bottom = getBottomGradeUseCase.getBottomGrade(course);
+                    System.out.println(bottom);
+                    JOptionPane.showMessageDialog(
+                        jFrame, "Bottom Grade: " + bottom.values().iterator().next() + "\n" + "by: " + bottom.keySet().iterator().next()
+                    );
                     courseField.setText("");
                 }
                 catch (JSONException ex) {
