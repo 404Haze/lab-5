@@ -35,8 +35,8 @@ Below is one such cat fact received from the API:
 Just like in a Java method call, web API calls can have input parameters.
 For instance, in the meowfacts API, you are able to receive multiple cat 
 facts at once by providing a count parameter.
-To do so, you append "?count=x" to the meowfacts API URL where `x` is the 
 number of cat facts you would like to request.
+To do so, you append "?count=x" to the meowfacts API URL where `x` is the
 
 For example, by navigating to https://meowfacts.herokuapp.com/?count=5 in 
 your web browser, you will be returned five facts.
