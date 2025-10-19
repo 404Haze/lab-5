@@ -12,12 +12,6 @@ target/
 *.iws
 *.iml
 *.ipr
-.env
-# Build & IDE files
-target/
-.idea/
-*.iml
-.DS_Store
 
 
 ### Eclipse ###
